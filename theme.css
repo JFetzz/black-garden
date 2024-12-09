@@ -1,34 +1,439 @@
 body {
-	--radius-s: 0px;
-	--radius-m: 0px;
-	--radius-l: 0px;
-	--input-radius: 0px;
-	--tab-radius-active: 0px;
-	--checkbox-radius: 0px;
-	--toggle-radius: 0px;
-	--toggle-thumb-radius: 0px;
-	--slider-thumb-radius: 0px;
+	--radius-s: 8px;
+	--radius-m: 12px;
+	--radius-l: 16px;
+	--input-radius: 12px;
+	--tab-radius-active: 12px;
+	--checkbox-radius: 8px;
+	--toggle-radius: 8px;
+	--toggle-thumb-radius: 8px;
 }
 
-.workspace-tab-header.is-active::before, .workspace-tab-header.is-active::after {
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
 	display: none;
 }
 
 svg * {
 	stroke-linecap: square;
 	stroke-linejoin: miter;
-	rx: 0;
-	ry: 0;
 }
 
 .menu {
 	padding: var(--size-2-1);
+	border-radius: var(--radius-m);
 }
 
 .menu-item {
 	padding: var(--size-4-1) var(--size-4-2);
+	border-radius: var(--radius-s);
 }
 
 .menu-separator {
 	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
 }
+
+/* Round reading view edges more */
+.markdown-preview-view {
+	border-radius: var(--radius-l);
+	/* Removed overflow: hidden; to restore scrolling */
+}
+
+.cm-content,
+.cm-scroller,
+.cm-editor {
+	border-radius: var(--radius-l);
+	/* Removed overflow: hidden; to restore scrolling */
+}
+
+.workspace-leaf-content,
+.workspace-split,
+.modal-container,
+.theme-dark,
+.theme-light {
+	border-radius: var(--radius-l);
+}
+
+/*------------------------------------------------------------------------------
+   Vibrant Sidebar With Slightly Brighter Colors
+------------------------------------------------------------------------------*/
+
+:root {
+	--mint: #52eea3;
+	--cyan: #51e1e9;
+	--light-blue: #54b6f8;
+	--blue: #437cf3;
+	--violet: #9446f8;
+	--purple: #c952ed;
+	--cool-gray: #515768;
+
+	--default-text-color: #d0d0d0;
+	--highlight: #fff;
+	--shadow: #0b0c2c;
+	--nav-item-weight-hover: bold;
+}
+
+.theme-light {
+	--contrast-color: var(--shadow);
+	--default-text-color: var(--shadow);
+	--bg-contrast-amount: 70%;
+	--fg-contrast-amount: 30%;
+	--medium-contrast-amount: 60%;
+	--active-contrast-amount: 30%;
+
+	/* Slightly adjust colors for readability in light mode */
+	--mint: color-mix(in srgb, #52eea3 85%, var(--shadow));
+	--cyan: color-mix(in srgb, #51e1e9 85%, var(--shadow));
+	--light-blue: color-mix(in srgb, #54b6f8 90%, var(--shadow));
+	--blue: color-mix(in srgb, #437cf3 90%, var(--shadow));
+	--violet: color-mix(in srgb, #9446f8 90%, var(--shadow));
+	--purple: color-mix(in srgb, #c952ed 90%, var(--shadow));
+	--cool-gray: color-mix(in srgb, #515768 90%, var(--shadow));
+}
+
+.theme-dark {
+	--contrast-color: var(--highlight);
+	--bg-contrast-amount: 15%;
+	--fg-contrast-amount: 40%;
+	--medium-contrast-amount: 20%;
+	--active-contrast-amount: 10%;
+}
+
+/* Base styling for folder titles */
+.nav-folder-title {
+	font-weight: bold;
+	border-radius: 5px;
+	padding: 3px 5px 2px 15px !important;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Black text on hover for better contrast */
+.nav-folder-title:hover {
+	color: #000000;
+}
+
+/* Define base colors for folders based on path prefix */
+.nav-folder-title[data-path^="00"] {
+	--this-color: var(--mint);
+}
+
+.nav-folder-title[data-path^="01"] {
+	--this-color: var(--cyan);
+}
+
+.nav-folder-title[data-path^="02"] {
+	--this-color: var(--light-blue);
+}
+
+.nav-folder-title[data-path^="03"] {
+	--this-color: var(--blue);
+}
+
+.nav-folder-title[data-path^="04"] {
+	--this-color: var(--violet);
+}
+
+.nav-folder-title[data-path^="05"] {
+	--this-color: var(--purple);
+}
+
+.nav-folder-title[data-path^="99"] {
+	--this-color: var(--cool-gray);
+}
+
+.nav-folder-title[data-path^="00"],
+.nav-folder-title[data-path^="01"],
+.nav-folder-title[data-path^="02"],
+.nav-folder-title[data-path^="03"],
+.nav-folder-title[data-path^="04"],
+.nav-folder-title[data-path^="05"],
+.nav-folder-title[data-path^="99"] {
+	color: color-mix(in srgb, var(--this-color) 80%, var(--default-text-color));
+	background: none;
+}
+
+.nav-folder-title[data-path^="00"]:hover,
+.nav-folder-title[data-path^="01"]:hover,
+.nav-folder-title[data-path^="02"]:hover,
+.nav-folder-title[data-path^="03"]:hover,
+.nav-folder-title[data-path^="04"]:hover,
+.nav-folder-title[data-path^="05"]:hover,
+.nav-folder-title[data-path^="99"]:hover {
+	background: none;
+	color: color-mix(in srgb, var(--this-color) 90%, var(--default-text-color));
+}
+
+/* File titles inside these folders */
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="00"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="01"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="02"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="03"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="04"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="05"]) .nav-file-title,
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="99"]) .nav-file-title {
+	color: color-mix(in srgb, var(--this-color) 80%, var(--default-text-color));
+}
+
+/* Adjust indentation guides based on folder color */
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="00"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="01"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="02"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="03"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="04"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="05"]),
+.tree-item-children .nav-folder:has(.nav-folder-title[data-path^="99"]) {
+	--nav-indentation-guide-color: color-mix(in srgb, var(--this-color) var(--medium-contrast-amount), transparent);
+}
+
+/*------------------------------------------------------------------------------
+   CyanVoxel's General Tweaks
+------------------------------------------------------------------------------*/
+
+.theme-light,
+.theme-dark {
+	--link-decoration: none;
+}
+
+h1 {
+	margin-top: 20px !important;
+}
+
+hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.image-borders img {
+	border: solid;
+	border-width: 2px;
+	border-color: rgba(122, 122, 122, 0.2);
+}
+
+.markdown-preview-view img {
+	max-width: 100%;
+}
+
+img {
+	max-width: 100%;
+	border-radius: 6px;
+}
+
+.callout {
+	border-radius: 12px;
+	border-width: 2px;
+}
+
+.task-list-item-checkbox {
+	border-width: 2px;
+}
+
+#calendar-container .title {
+	font-size: 18px;
+}
+
+.center-images img {
+	display: block !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+.no-embed-border {
+	--embed-border-left: 0px solid black !important;
+}
+
+.markdown-preview-view {
+	border-radius: 6px;
+}
+
+code {
+	font-family: "JetBrainsMono Nerd Font Mono", monospace;
+}
+
+/*------------------------------------------------------------------------------
+   Heading Styling with Folder Colors
+------------------------------------------------------------------------------*/
+
+/* Center headings in preview mode */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+	text-align: center !important;
+}
+
+/* Center headings in editing mode (CodeMirror) */
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+	text-align: center !important;
+}
+
+/* Assign colors based on folder colors:
+   h1: var(--mint)
+   h2: var(--cyan)
+   h3: var(--light-blue)
+   h4: var(--blue)
+   h5: var(--violet)
+   h6: var(--purple)
+*/
+.markdown-preview-view h1,
+.cm-header-1 {
+	color: var(--mint) !important;
+	/* #52eea3 */
+}
+
+.markdown-preview-view h2,
+.cm-header-2 {
+	color: var(--cyan) !important;
+	/* #51e1e9 */
+}
+
+.markdown-preview-view h3,
+.cm-header-3 {
+	color: var(--light-blue) !important;
+	/* #54b6f8 */
+}
+
+.markdown-preview-view h4,
+.cm-header-4 {
+	color: var(--blue) !important;
+	/* #437cf3 */
+}
+
+.markdown-preview-view h5,
+.cm-header-5 {
+	color: var(--violet) !important;
+	/* #9446f8 */
+}
+
+.markdown-preview-view h6,
+.cm-header-6 {
+	color: var(--purple) !important;
+	/* #c952ed */
+}
+
+/* Force the main background to pure black */
+body,
+.theme-dark,
+.theme-light {
+	background-color: #000000 !important;
+	color: var(--default-text-color) !important;
+	/* Retain readable text color */
+}
+
+.markdown-preview-view,
+.cm-content,
+.cm-scroller,
+.cm-editor,
+.workspace-leaf-content,
+.workspace-split,
+.modal-container {
+	background-color: #000000 !important;
+}
+
+.menu,
+.menu-item,
+.callout,
+.task-list-item-checkbox {
+	background-color: #000000 !important;
+}
+
+/* Top title/tab bar background */
+.titlebar,
+.workspace-tabs,
+.workspace-tab-header-container,
+.workspace-tab-header,
+.view-header {
+	background-color: #000000 !important;
+}
+
+/* Breadcrumbs (the file path line) */
+.view-header-breadcrumbs,
+.view-header-breadcrumbs-separator,
+.nav-breadcrumbs {
+	background-color: #000000 !important;
+}
+
+/* Ensure text is still visible on black background */
+.view-header-title,
+.nav-breadcrumbs a {
+	color: var(--default-text-color) !important;
+}
+
+/* If any other elements have a background set elsewhere, 
+   these rules will override them to ensure a cohesive black background */
+
+/* Table styling in preview mode */
+.markdown-preview-view table {
+	border-collapse: collapse;
+	width: 100%;
+	/* Adjust as needed */
+	border: 1px solid #444;
+	/* Subtle border color */
+	background-color: #000000;
+	/* Ensure base is black */
+}
+
+.markdown-preview-view th,
+.markdown-preview-view td {
+	border: 1px solid #444;
+	/* Matching border for cells */
+	padding: 0.5em;
+	color: var(--default-text-color);
+}
+
+/* Header styling: slightly lighter background for distinction */
+.markdown-preview-view th {
+	background-color: #111111;
+	font-weight: bold;
+	text-align: left;
+	/* Or center, depending on preference */
+}
+
+/* Alternate row shading for readability */
+.markdown-preview-view tr:nth-child(even) {
+	background-color: #111111;
+}
+
+.markdown-preview-view tr:nth-child(odd) {
+	background-color: #000000;
+}
+
+/* If you have inline code in table cells, style it similarly to your code blocks */
+.markdown-preview-view td code,
+.markdown-preview-view th code {
+	background-color: rgba(255, 255, 255, 0.08);
+	padding: 2px 4px;
+	border-radius: 4px;
+	font-family: "JetBrainsMono Nerd Font Mono", monospace;
+	color: var(--default-text-color);
+}
+
+/* Inline code in editing mode */
+.cm-inline-code {
+	background-color: rgba(255, 255, 255, 0.08);
+	padding: 2px 4px;
+	border-radius: 4px;
+	color: var(--default-text-color);
+	font-family: "JetBrainsMono Nerd Font Mono", monospace;
+}
+
+/* Code blocks in editing mode */
+.cm-content pre.HyperMD-codeblock code,
+.cm-content pre.cm-codeblock code {
+	background: #000000;
+	/* Keep consistent with overall black theme */
+	padding: 1em;
+	border-radius: 8px;
+	color: #c9d1d9;
+	font-family: "JetBrainsMono Nerd Font Mono", monospace;
+	font-size: 0.9em;
+	overflow-x: auto;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
